@@ -1,0 +1,282 @@
+
+FlickerLight2 FlameThrowerFire
+{
+ Offset 0 2 0
+ Color 0.15 0.04 0.0
+ Size 40
+ SecondarySize 60
+ Interval 2.0
+}
+
+FlickerLight2 Flame
+{
+ Offset 0 0 0
+ Color 0.15 0.04 0.0
+ Size 20
+ SecondarySize 30
+ Interval 2.0
+}
+
+Object ZombieFire
+{
+ Frame FRFX { Light FlameThrowerFire }
+}
+
+Object ZombieDropFire
+{
+ Frame FLME { Light Flame }
+}
+
+
+
+BrightMap Sprite MAUDA1C1
+{
+Map BMMAUDA1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDA2C8
+{
+Map BMMAUDA2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDA3C7
+{
+Map BMMAUDA3
+DisableFullBright
+}
+
+BrightMap Sprite MAUDA7C3
+{
+Map BMMAUDA7
+DisableFullBright
+}
+
+BrightMap Sprite MAUDA8C2
+{
+Map BMMAUDA8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDB1D1
+{
+Map BMMAUDB1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDB2D8
+{
+Map BMMAUDB2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDB3D7
+{
+Map BMMAUDB3
+DisableFullBright
+}
+
+BrightMap Sprite MAUDB7D3
+{
+Map BMMAUDB7
+DisableFullBright
+}
+
+BrightMap Sprite MAUDB8D2
+{
+Map BMMAUDB8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDE1
+{
+Map BMMAUDE1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDE2
+{
+Map BMMAUDE2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDE8
+{
+Map BMMAUDE8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDF1
+{
+Map BMMAUDF1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDF2
+{
+Map BMMAUDF2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDF8
+{
+Map BMMAUDF8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDG1
+{
+Map BMMAUDG1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDG2
+{
+Map BMMAUDG2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDG8
+{
+Map BMMAUDG8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDH1
+{
+Map BMMAUDH1
+DisableFullBright
+}
+
+BrightMap Sprite MAUDH2
+{
+Map BMMAUDH2
+DisableFullBright
+}
+
+BrightMap Sprite MAUDH3
+{
+Map BMMAUDH3
+DisableFullBright
+}
+
+BrightMap Sprite MAUDH4
+{
+Map BMMAUDH4
+DisableFullBright
+}
+
+BrightMap Sprite MAUDH8
+{
+Map BMMAUDH8
+DisableFullBright
+}
+
+BrightMap Sprite MAUDI0
+{
+Map BMMAUDI0
+DisableFullBright
+}
+
+Pointlight SuicideBomberDeath1
+{
+Color 1.0 0.4 0.0
+Size 35
+}
+
+Pointlight SuicideBomberDeath2
+{
+Color 0.6 0.3 0.0
+Size 40
+}
+
+Pointlight SuicideBomberDeath3
+{
+Color 0.3 0.1 0.0
+Size 35
+}
+
+Object KamikaziGuy
+{
+Frame BMBEM { Light SuicideBomberDeath1 }
+Frame BMBEN { Light SuicideBomberDeath2 }
+Frame BMBEO { Light SuicideBomberDeath3 }
+}
+
+pulselight DOUBLER
+{
+	color 1.0 0.0 0.0
+	size 40
+	secondarySize 42
+	interval 2.0
+	offset 0 16 0
+}
+
+object DoubleSphere
+{
+	frame DDMG { light DOUBLER }
+}
+
+pulselight QUAD
+{
+	color 1.0 0.0 1.0
+	size 40
+	secondarySize 42
+	interval 2.0
+	offset 0 16 0
+}
+
+object QuadSphere
+{
+	frame QDMG { light QUAD }
+}
+
+pointlight BerserkSphere
+{
+    color 0.3 0.3 0.3
+    size 18
+}
+object BerserkSphere
+{
+    frame BERS { light BerserkSphere }
+}
+
+PulseLight ArmorSphere
+{
+Color 1.0 0.3 1.0
+Size 32
+SecondarySize 48
+Interval 4.0
+Offset 0 24 0
+}
+
+Object ArmorSphere
+{
+Frame ARSP { Light ArmorSphere }
+}
+
+Pointlight AmmoSphereLight
+{
+	Color 0.8 0.0 0.0
+	Size 18
+}
+
+Object AmmoSphere
+{
+	Frame AMSP { Light AmmoSphereLight }
+}
+
+PulseLight HasteSphere
+{
+Color 1.0 1.0 0.0
+Size 40
+SecondarySize 56
+Interval 5.0
+}
+
+Object HasteSphere
+{
+Frame HAST { Light HasteSphere }
+}
+

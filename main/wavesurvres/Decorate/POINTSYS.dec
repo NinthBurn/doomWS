@@ -1,0 +1,17 @@
+Actor ShopPoints: Inventory
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 100000000
+}
+
+Actor GainedShopPoints: Inventory
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 100000000
+}
+
+Actor LostShopPoints: Inventory
+{
+	Inventory.Amount 1
+	Inventory.MaxAmount 100000000
+}

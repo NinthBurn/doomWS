@@ -1,0 +1,106 @@
+
+/* Add a monster to the common spawn pool.
+	Be aware that you cannot have more than 10 different monster types per wave.
+
+	arguments:
+		monsterName - Name of the monster
+		quantity - desired quantity of monsters in the pool
+*/
+function void addMonsterToCommonList(int wave, str monsterName, int quantity){
+	wave--;
+	if(wave < MAX_NUMBER_OF_WAVES && lastMonsterListIndex[wave] < MAX_MONSTER_LIST_LENGTH){
+		monsterWave[wave][lastMonsterListIndex[wave]][0] = monsterName;
+		monsterWave[wave][lastMonsterListIndex[wave]][1] = quantity;
+		lastMonsterListIndex[wave]++;
+	}
+
+	else
+		printbold(s: "Pool of monsters limit reached; default max is ", d:MAX_MONSTER_LIST_LENGTH, s:" per wave, max ", d:MAX_NUMBER_OF_WAVES, s:" waves.");
+}
+
+/* Register a map spot for the common spawn pool (20 maximum).
+	arguments:
+		tid - thing id of the map spot
+*/
+function void addCommonSpotTIDs(int tid){
+	if(lastCommonSpotIndex < 20)
+		commonSpotTIDs[lastCommonSpotIndex++] = tid;
+	else
+		printbold(s: "Common spot TID limit reached; default max is 20.");
+}
+
+/* Reset the common spawn points. Use if you want to change them for another round.
+	arguments:
+		tid - thing id of the map spot
+*/
+function void resetCommonSpots(void){
+	lastCommonSpotIndex = 0;
+}
+
+/* Creates a monster queue for a specific spot / teleporter pad
+	arguments:
+		monsterName - Name of the monster
+		spawnSpotTID - Spot thing ID to spawn the monster at
+		amount - desired quantity of monsters in the pool
+		minimumDelay - minimum delay between spawns
+*/
+script "spawnMonsterQueueSpecific" (int monsterName, int spawnSpotTID, int amount, int minimumDelay){
+	//amount = amount * PlayerCount();
+
+	while(amount > 0){
+		// weird but ok
+		if(SpawnSpotFacing(monsterName, spawnSpotTID, 2000 + spawnSpotTID)){
+			SpawnSpotFacingForced("TeleportFog", spawnSpotTID, 0);
+			amount--;
+		}
+
+		// maybe change the range to 10-35
+		delay(minimumDelay + Random(5, 35));
+	}
+}
+
+/* Starts randomly spawning monsters in one of the common spawn spots
+	arguments:
+		minimumDelay - minimum delay between spawns
+
+	TODO: write a version with weights
+*/
+script "spawnMonsterCommonSpots" (int minimumDelay){
+	int remainingToSpawn = 0;
+	int randomIndex = 0;
+	int wave = currentWaveRound - 1;
+	int monsterTypeCount = lastMonsterListIndex[wave];
+	int randomSpotIndex = 0;
+	int spawnSpotTID = 0;
+
+	for(int i = 0; i < monsterTypeCount; ++i){
+		remainingToSpawn += monsterWave[wave][i][1];
+	}
+
+	while(remainingToSpawn > 0){
+		randomIndex = Random(0, monsterTypeCount - 1);
+		//print(d:monsterTypeCount, s:" ", d:remainingToSpawn, s:" ", d:randomIndex, s:" ", d: randomSpotIndex);
+
+		if(monsterWave[wave][randomIndex][1]){
+			randomSpotIndex = Random(0, lastCommonSpotIndex - 1);
+			spawnSpotTID = commonSpotTIDs[randomSpotIndex];
+
+			//print(d:monsterTypeCount, s:" ", d:remainingToSpawn, s:" ", d:randomIndex, s:" ", d: randomSpotIndex);
+			if(SpawnSpotFacing(monsterWave[wave][randomIndex][0], spawnSpotTID, 2000 + spawnSpotTID)){
+				SpawnSpotFacingForced("TeleportFog", spawnSpotTID, 0);
+				monsterWave[wave][randomIndex][1]--;
+				remainingToSpawn--;
+
+				delay(minimumDelay + Random(5, 15));
+			}
+
+		}else{
+			for(i = randomIndex; i < monsterTypeCount - 1; i++){
+				monsterWave[wave][i][0] = monsterWave[wave][i + 1][0];
+				monsterWave[wave][i][1] = monsterWave[wave][i + 1][1];
+			}
+			monsterTypeCount--;
+		}
+		Delay(2);
+	}
+}

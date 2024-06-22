@@ -1,0 +1,53 @@
+weapons/scorch                dsscorch
+weapons/onfire                dsonfire
+weapons/flamer                dsflamer
+
+SPRPIMPT SPRPIMPT
+$Limit SPRPIMPT	0
+
+NDLSHOT NDLSHOT
+$Limit NDLSHOT	0
+
+$RANDOM monster/dvlsit { monster/dvlsi1 monster/dvlsi2 }
+monster/dvlsi1 dsdvlsi1
+monster/dvlsi2 dsdvlsi2
+
+monster/dvlpai dsdvlpai
+$RANDOM monster/dvldth { monster/dvldt1 monster/dvldt2 }
+monster/dvldt1 dsdvldt1
+monster/dvldt2 dsdvldt2
+
+monster/dvlact dsdvlact
+
+DSMGUN1	DSMGUN1
+DSMGUN2	DSMGUN2
+DSMGUN3	DSMGUN3
+DSMGUN4	DSMGUN4
+DSMGUN5	DSMGUN5
+
+$random MGun/Fire	{ DSMGUN1 DSMGUN2 DSMGUN3 DSMGUN4 DSMGUN5 }
+$limit MGun/Fire 0
+
+$pitchshiftrange 4
+weapons/saw2up			dssa2up
+weapons/saw2idle		dssa2idl
+weapons/saw2full		dssa2ful
+weapons/saw2hit			dssa2hit
+
+CHAINSPI CHAINSPI
+$Limit CHAINSPI 0
+
+CHAINSTA CHAINSTA
+$Limit CHAINSTA 0
+
+CHAINSTO CHAINSTO
+
+CHGNSHOT CHGNSHOT
+$Limit CHGNSHOT 0
+
+kamikazi/scream		DSKAMAAH
+kamikazi/idle		DSKAMIDL
+
+DoubleDamage/Activate	DSDUBLON
+DoubleDamage/Deactivate	DSDUBLOF
+DoubleDamage/Attack		DSDUBLAT

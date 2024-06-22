@@ -1,0 +1,7 @@
+#include "zcommon.acs"
+#include "COMNDATA.acs"
+#include "CHTCODES.acs"
+#include "GENERALP.acs"
+#include "MONSPAWN.acs"
+#include "PLAYRHUD.acs"
+#include "POINTSYS.acs"

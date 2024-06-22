@@ -1,0 +1,45 @@
+//#include "zcommon.acs"
+
+// --- HUD & PLAYER DATA --- //
+#define MAX_PLAYER_COUNT 20
+int playerPoints[MAX_PLAYER_COUNT];
+int killPoints[MAX_PLAYER_COUNT];
+
+str waveStatus="Waiting for wave...";
+
+// --- SHOP & POINTS SYSTEM DATA --- //
+
+str shopItemsEntityName[50]={"Shotgun", "SuperShotgun", "NBChaingun", "RocketLauncher", "PlasmaRifle", "BFG9000", //0-5 guns
+	"Stimpack", "GreenArmor", "BlueArmor",  //6-8 heals
+	"Clip", "Shell", "RocketAmmo", "Cell", "Backpack", //9-13 ammo
+	"Soulsphere", "Berserk", "Megasphere", "InvulnerabilitySphere" //14-17 powerups
+};
+
+str shopItemsDisplayName[50]={"Shotgun", "Super Shotgun", "Chaingun", "Rocket Launcher", "Plasma Rifle", "BFG9000", //0-5 guns
+	"HP", "Green Armor (33% absorption)", "Blue Armor (50% absorption)", //6-8 heals
+	"Clip ammo", "Shells", "Rockets", "Cells", "Backpack", //9-13 ammo
+	"Soulsphere", "Berserk", "Megasphere", "Invulnerability Sphere" //14-17 powerups
+};
+
+bool dooropen[20], confirmPlayerPurchase;
+
+bool activatedDoublePoints, activatedTriplePoints;
+int pointsMultiplier = 1;
+
+// --- WAVE MONSTER DATA --- // 
+#define MAX_NUMBER_OF_WAVES 12
+#define MAX_MONSTER_LIST_LENGTH 10
+
+// pool for multiple spawn points
+// 1st index: wave round
+// 2nd index: monster
+// 3rd index: 0 - monster name, 1 - monster quantity
+int monsterWave[MAX_NUMBER_OF_WAVES]
+	[MAX_MONSTER_LIST_LENGTH][2];
+
+int lastMonsterListIndex[MAX_NUMBER_OF_WAVES] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int commonSpotTIDs[20], lastCommonSpotIndex = 0;
+
+// --- WAVE BEHAVIOUR --- //
+int mkilled, musicVolume=1.0, currentWaveRound, mtotal, totalWaves;
+str mus[20];

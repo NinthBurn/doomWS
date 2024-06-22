@@ -1,0 +1,3 @@
+#include "Decorate/Zombies/ZOMBIES.dec"
+#include "Decorate/Imps/IMPS.dec"
+#include "Decorate/Pinkies/PINKIES.dec"

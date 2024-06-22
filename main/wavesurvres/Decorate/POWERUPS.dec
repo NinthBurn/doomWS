@@ -1,0 +1,234 @@
+//15300-
+ACTOR PowerDoubleDamage : PowerDamage
+{
+	Damagefactor "normal", 2
+}
+
+ACTOR PowerupSpawner : RandomSpawner 15300
+{
+	//$Title Powerup Spawner
+	//$Category PowerUps
+	DropItem "DoubleSphere"
+    DropItem "QuadSphere"
+    DropItem "HasteSphere"
+    DropItem "ArmorSphere"
+    DropItem "AmmoSphere"
+    DropItem "DoublePointsSphere"
+    DropItem "TriplePointsSphere"
+    DropItem "InvulnerabilitySphere"
+}
+
+ACTOR DoubleSphere : PowerupGiver 15301
+{
+	//$Title Double Damage
+	//$Category PowerUps
+	Game Doom
+
+	+COUNTITEM
+	+FLOATBOB
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+
+	Inventory.MaxAmount 0
+	Inventory.PickupMessage "Double Damage!"
+	Inventory.PickupSound "DoubleDamage/Activate"
+	Powerup.Type DoubleDamage
+	Powerup.Color RedMap
+	Powerup.Duration -30
+	RenderStyle Translucent
+	Alpha 0.8
+	FloatBobStrength 0.0
+	
+		States
+		{
+			Spawn:	
+				DDMG ABCDCB 5 Bright
+				Loop
+		}
+}
+
+ACTOR PowerQuadDamage : PowerDamage
+{
+	Damagefactor "normal", 4
+}
+
+ACTOR QuadSphere : PowerupGiver 15302
+{
+	//$Title Quad Damage
+	//$Category PowerUps
+	Game Doom
+	+COUNTITEM
+	//+FLOATBOB
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+
+	Inventory.MaxAmount 0
+	Inventory.PickupMessage "Quad Damage!"
+	Inventory.PickupSound "DoubleDamage/Activate"
+	Powerup.Type QuadDamage
+	Powerup.Color 255, 0, 255, 0.5
+	Powerup.Duration -30
+	RenderStyle Translucent
+	Alpha 0.8
+	//FloatBobStrength 0.1
+	
+		States
+		{
+			Spawn:	
+				QDMG ABCDCB 5 Bright
+				Loop
+		}
+}
+
+Actor BerserkSphere : CustomInventory 15303
+{
+	//$Title Berserk Sphere
+	//$Category PowerUps
+  Game Doom
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  +INVENTORY.FANCYPICKUPSOUND
+  Inventory.PickupMessage "Berserk Supercharge!"
+  Inventory.PickupSound "misc/p_pkup"
+  States
+  {
+  Spawn:
+    BERS ABCDCB 6 Bright
+    Loop
+  Pickup:
+    TNT1 A 0 A_GiveInventory("PowerStrength")
+	TNT1 A 0 A_GiveInventory("BerserkSphereHealth")
+    //TNT1 A 0 A_SelectWeapon("Fist")
+    Stop
+  }
+}
+
+Actor BerserkSphereHealth : Health
+{
+  -COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.Amount 100
+  Inventory.MaxAmount 200
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A -1
+    Loop
+  }
+}
+
+Actor ArmorSphere : BasicArmorPickup 15304
+{
+	//$Title Armor Sphere
+	//$Category PowerUps
+  Radius 20
+  Height 16
+  Inventory.PickupSound "Misc/P_PkUp"
+  Inventory.Pickupmessage "Armor Sphere!"
+  Inventory.Icon "ARM2A0"
+  +CountItem
+  +Inventory.FancyPickupSound
+  Armor.Savepercent 50
+  Armor.Saveamount 300
+  States
+  {
+  Spawn:
+    ARSP ABCB 10 Bright
+    Loop
+  }
+}
+
+Actor AmmoSphere : PowerupGiver 15305
+{
+	//$Title Ammo Sphere
+	//$Category PowerUps
+	Game Doom
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	+INVENTORY.FANCYPICKUPSOUND
+	Inventory.PickupMessage "Infinite Ammo!"
+	Inventory.PickupSound "misc/p_pkup"
+	Powerup.Duration -30
+	Powerup.Type "PowerInfiniteAmmo"
+	Powerup.Color "255 0 0" 0.4
+	States
+	{
+	Spawn:
+		AMSP ABCD 6 bright
+		loop
+	}
+}
+
+actor HasteSphere : PowerupGiver 15306
+{
+	//$Title Haste Sphere
+	//$Category PowerUps
+	Game Doom
+	inventory.pickupmessage "Turbocharge!!."
+	inventory.maxamount 0
+	powerup.duration -30
+	powerup.color "FF FF 00", 0.1
+	powerup.type Speed
+	+COUNTITEM
+	+INVENTORY.AUTOACTIVATE
+	+INVENTORY.ALWAYSPICKUP
+	States
+	{
+	Spawn:
+		HAST ABCB 6 Bright
+		Loop
+	}
+}
+
+Actor DoublePointsSphere : CustomInventory 15307
+{
+	//$Title Double Points Sphere
+	//$Category PowerUps
+  Radius 20
+  Height 16
+  Inventory.PickupSound "Misc/P_PkUp"
+  Inventory.Pickupmessage "Double Points!"
+  Inventory.Icon "SPDBC0"
+  XScale 0.4
+  YScale 0.35
+  +CountItem
+  +Inventory.FancyPickupSound
+  States
+  {
+  Spawn:
+    SPDB ABCCCBA 8 Bright
+    Loop
+	Pickup:
+	SPDB A 0 ACS_NamedExecuteAlways("ActivateDoublePoints", 0)
+	Stop
+  }
+}
+
+Actor TriplePointsSphere : CustomInventory 15308
+{
+	//$Title Triple Points Sphere
+	//$Category PowerUps
+  Radius 20
+  Height 16
+  Inventory.PickupSound "Misc/P_PkUp"
+  Inventory.Pickupmessage "Triple Points!"
+  Inventory.Icon "SPTPC0"
+  XScale 0.4
+  YScale 0.35
+  +CountItem
+  +Inventory.FancyPickupSound
+  States
+  {
+  Spawn:
+    SPTP ABCCCBA 8 Bright
+    Loop
+	Pickup:
+	SPDB A 0 ACS_NamedExecuteAlways("ActivateTriplePoints", 0)
+	Stop
+  }
+}

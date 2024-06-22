@@ -1,0 +1,372 @@
+#include "Decorate/PLAYERDEF.dec"
+#include "Decorate/SHOPDECO.dec"
+#include "Decorate/WEAPONS.dec"
+#include "Decorate/MONSTERS.dec"
+#include "Decorate/POWERUPS.dec"
+#include "Decorate/POINTSYS.dec"
+
+ACTOR specialCrateClosed 19001
+{
+	Radius 16
+	Height 32
+	
+	+SOLID
+	+INVULNERABLE
+	+NODAMAGE
+	+SHOOTABLE
+	+NOTAUTOAIMED
+	+NEVERTARGET
+	+DONTTHRUST
+  
+	States {
+		Spawn:
+			TCBR A -1
+			Loop
+	}
+}
+
+ACTOR MyHellKnight : BaronOfHell replaces HellKnight
+{
+var int user_killpoints;
+//$Title MyHellKnight
+  Health 450
+  Speed 14
+  -BOSSDEATH
+  SeeSound "knight/sight"
+  ActiveSound "knight/active"
+  PainSound "knight/pain"
+  DeathSound "knight/death"
+  HitObituary "$OB_KNIGHTHIT"
+  Obituary "$OB_KNIGHT"
+	DropItem "PowerupSpawner" 8
+  States
+  {
+  Spawn:
+	BOS2 A 0 A_SetUserVar("user_killpoints",50)
+    BOS2 AB 10 A_Look
+    Loop
+  See:
+	BOS2 A 0 A_SetUserVar("user_killpoints",50)
+    BOS2 AABBCCDD 3 A_Chase
+    Loop
+  Melee:
+  Missile:
+    BOS2 EF 8 A_FaceTarget
+    BOS2 G 8 A_BruisAttack
+    Goto See
+  Pain:
+    BOS2 H 2
+    BOS2 H 2 A_Pain
+    Goto See
+  Death:
+	BOS2 I 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    BOS2 I 8
+    BOS2 J 8 A_Scream
+    BOS2 K 8
+    BOS2 L 8 A_NoBlocking
+    BOS2 MN 8
+    BOS2 O -1
+    Stop
+  Raise:
+    BOS2 O 8
+    BOS2 NMLKJI 8
+    Goto See
+  }
+}
+
+ACTOR MyArachnotron replaces Arachnotron
+{
+var int user_killpoints;
+  Health 500
+  Radius 64
+  Height 64
+  Mass 600
+  Speed 18
+  PainChance 128
+  Monster
+  +FLOORCLIP
+  +BOSSDEATH
+  SeeSound "baby/sight"
+  PainSound "baby/pain"
+  DeathSound "baby/death"
+  ActiveSound "baby/active"
+  Obituary "$OB_BABY"
+  States
+  {
+  Spawn:
+	BSPI A 0 A_SetUserVar("user_killpoints",90)
+    BSPI AB 10 A_Look
+    Loop
+  See:
+	BSPI A 0 A_SetUserVar("user_killpoints",90)
+    BSPI A 20
+    BSPI A 3 A_BabyMetal
+    BSPI ABBCC 3 A_Chase
+    BSPI D 3 A_BabyMetal
+    BSPI DEEFF 3 A_Chase
+    Goto See+1
+  Missile:
+    BSPI A 20 Bright A_FaceTarget
+    BSPI G 4 Bright A_BspiAttack
+    BSPI H 4 Bright
+    BSPI H 1 Bright A_SpidRefire
+    Goto Missile+1
+  Pain:
+    BSPI I 3
+    BSPI I 3 A_Pain
+    Goto See+1
+  Death:
+	BSPI J 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    BSPI J 20 A_Scream
+    BSPI K 7 A_NoBlocking
+    BSPI LMNO 7
+    BSPI P -1 A_BossDeath
+    Stop
+  Raise:
+    BSPI P 5
+    BSPI ONMLKJ 5
+    Goto See+1
+  }
+}
+
+ACTOR MiniCyberdemon : Cyberdemon 15141
+{
+//$Category Monsters/Monsters+
+//$Title MiniCyberdemon
+var int user_killpoints;
+  Health 800
+  Radius 20
+  Height 83
+  XScale 0.5
+  YScale 0.75
+  Mass 700
+  PainChance 35
+  MinMissileChance 200
+  -BOSS
+  +MISSILEMORE
+  +FLOORCLIP
+  -DONTMORPH
+  -BOSSDEATH
+  SeeSound "cyber/sight"
+  PainSound "cyber/pain"
+  DeathSound "cyber/death"
+  ActiveSound "cyber/active"
+  Obituary "$OB_CYBORG"
+  States
+  {
+  Spawn:
+	CYBR A 0 A_SetUserVar("user_killpoints",150)
+    CYBR AB 10 A_Look
+    Loop
+  See:
+	CYBR A 0 A_SetUserVar("user_killpoints",150)
+    CYBR A 3 A_Hoof
+    CYBR ABBCC 3 A_Chase
+    CYBR D 3 A_Metal
+    CYBR D 3 A_Chase
+    Loop
+  Pain:
+    CYBR G 10 A_Pain
+    Goto See
+  Death:
+	CYBR H 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    CYBR H 10
+    CYBR I 10 A_Scream
+    CYBR JKL 10
+    CYBR M 10 A_NoBlocking
+    CYBR NO 10
+    CYBR P 30
+    CYBR P -1 A_BossDeath
+    Stop
+  Missile:
+    CYBR E 9 A_FaceTarget
+    CYBR F 9 A_CyberAttack
+    CYBR E 9 A_FaceTarget
+    CYBR F 9 A_CyberAttack
+    Goto See
+  }
+}
+
+ACTOR MyArchvile : Archvile replaces Archvile
+{
+//$Category Monsters
+//$Title Archvile
+var int user_killpoints;
+  Health 600
+  Radius 20
+  Height 56
+  Mass 500
+  Speed 15
+  PainChance 10
+  Monster
+  MaxTargetRange 896
+  +QUICKTORETALIATE
+  +FLOORCLIP
+  +NOTARGET
+  SeeSound "vile/sight"
+  PainSound "vile/pain"
+  DeathSound "vile/death"
+  ActiveSound "vile/active"
+  MeleeSound "vile/stop"
+  Obituary "$OB_VILE"
+  States
+  {
+  Spawn:
+	VILE A 0 A_SetUserVar("user_killpoints",250)
+    VILE AB 10 A_Look
+    Loop
+  See:
+	VILE A 0 A_SetUserVar("user_killpoints",250)
+    VILE AABBCCDDEEFF 2 A_VileChase
+    Loop
+  Death:
+	VILE Q 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    VILE Q 7
+    VILE R 7 A_Scream
+    VILE S 7 A_NoBlocking
+    VILE TUVWXY 7
+    VILE Z -1
+    Stop
+  }
+}
+
+ACTOR MyCaco : Cacodemon replaces Cacodemon
+{
+//$Category Monsters
+//$Title Cacodemon
+	var int user_killpoints;
+	Health 250
+	Radius 31
+	Height 56
+	Mass 400
+	Speed 12
+	PainChance 128
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	SeeSound "caco/sight"
+	PainSound "caco/pain"
+	DeathSound "caco/death"
+	ActiveSound "caco/active"
+	Obituary "$OB_CACO"
+	HitObituary "$OB_CACOHIT"
+	DropItem "PowerupSpawner" 12
+	States
+	  {
+	  Spawn:
+		HEAD A 0 A_SetUserVar("user_killpoints",70)
+		HEAD A 10 A_Look
+		Loop
+	  See:
+		HEAD A 0 A_SetUserVar("user_killpoints",70)
+		HEAD A 3 A_Chase
+		Loop
+	  Death:
+		HEAD G 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+		HEAD G 8
+		HEAD H 8 A_Scream
+		HEAD IJ 8
+		HEAD K 8 A_NoBlocking
+		HEAD L -1 A_SetFloorClip
+		Stop
+	  }
+}
+
+ACTOR Fatty : Fatso replaces Fatso
+{
+//$Category Monsters
+//$Title Mancubus
+	var int user_killpoints;
+	  Health 600
+	  Radius 48
+	  Height 64
+	  Mass 1000
+	  Speed 12
+	  PainChance 80
+	  Monster
+	  +FLOORCLIP
+	  +BOSSDEATH
+	  SeeSound "fatso/sight"
+	  PainSound "fatso/pain"
+	  DeathSound "fatso/death"
+	  ActiveSound "fatso/active"
+	  Obituary "$OB_FATSO"
+	  States
+	  {
+	  Spawn:
+		FATT A 0 A_SetUserVar("user_killpoints",70)
+		FATT AB 15 A_Look
+		Loop
+	  See:
+		FATT A 0 A_SetUserVar("user_killpoints",70)
+		FATT AABBCCDDEEFF 4 A_Chase
+		Loop
+	  Death:
+		FATT K 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+		FATT K 6
+		FATT L 6 A_Scream
+		FATT M 6 A_NoBlocking
+		FATT NOPQRS 6
+		FATT T -1 A_BossDeath
+		Stop
+	  }
+}
+
+ACTOR MyCyberdemon : Cyberdemon replaces Cyberdemon
+{
+//$Category Monsters
+//$Title Cyberdemon
+var int user_killpoints;
+  States
+  {
+  Spawn:
+	CYBR A 0 A_SetUserVar("user_killpoints",500)
+    CYBR AB 10 A_Look
+    Loop
+  See:
+	CYBR A 0 A_SetUserVar("user_killpoints",500)
+    CYBR A 3 A_Hoof
+    CYBR ABBCC 3 A_Chase
+    CYBR D 3 A_Metal
+    CYBR D 3 A_Chase
+    Loop
+  Death:
+	CYBR H 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    CYBR H 10
+    CYBR I 10 A_Scream
+    CYBR JKL 10
+    CYBR M 10 A_NoBlocking
+    CYBR NO 10
+    CYBR P 30
+    CYBR P -1 A_BossDeath
+    Stop
+  }
+}
+
+ACTOR MyRevenant : Revenant replaces Revenant
+{
+//$Category Monsters
+//$Title Revenant
+  var int user_killpoints;
+  Speed 13
+  DropItem "PowerupSpawner" 20
+  States
+  {
+  Spawn:
+	SKEL A 0 A_SetUserVar("user_killpoints",80)
+    SKEL AB 10 A_Look
+    Loop
+  See:
+	SKEL A 0 A_SetUserVar("user_killpoints",80)
+    SKEL AABBCCDDEEFF 2 A_Chase
+    Loop
+  Death:
+	SKEL L 0 ACS_NamedExecuteAlways("GetKillPoints", 0)
+    SKEL LM 7
+    SKEL N 7 A_Scream
+    SKEL O 7 A_NoBlocking
+    SKEL P 7
+    SKEL Q -1
+    Stop
+  }
+}

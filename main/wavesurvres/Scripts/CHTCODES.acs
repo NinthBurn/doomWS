@@ -1,0 +1,8 @@
+script "gibpoints" (Void){
+	int player = PlayerNumber();
+
+	if(player == -1)
+		terminate;
+
+	GiveInventory("ShopPoints", 10000);
+}

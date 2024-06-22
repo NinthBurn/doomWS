@@ -1,0 +1,337 @@
+//--GUNS
+ACTOR ShotgunBuyDeco 16000
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    SHOT A -1
+    Stop
+  }
+}
+
+ACTOR ChainGunBuyDeco 16001
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    NBCP A -1
+    Stop
+  }
+}
+
+ACTOR SuperShottyBuyDeco 16002
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    SGN2 A -1
+    Stop
+  }
+}
+
+ACTOR RocketLauncherBuyDeco 16003
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    LAUN A -1
+    Stop
+  }
+}
+
+ACTOR PlasmaGunBuyDeco 16004
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    PLAS A -1
+    Stop
+  }
+}
+
+ACTOR BFGBuyDeco 16005
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    BFUG A -1
+    Stop
+  }
+}
+
+//--AMMO
+ACTOR BPackBuyDeco 16006
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    BPAK A -1
+    Stop
+  }
+}
+
+ACTOR CELLBuyDeco 16007
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    CELL A -1
+    Stop
+  }
+}
+
+ACTOR CELLPACKBuyDeco 16008
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    CELP A -1
+    Stop
+  }
+}
+
+ACTOR AMMOBOXBuyDeco 16009
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    AMMO A -1
+    Stop
+  }
+}
+
+ACTOR ROCKETBuyDeco 16010
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    ROCK A -1
+    Stop
+  }
+}
+
+ACTOR ROCKETBOXBuyDeco 16011
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    BROK A -1
+    Stop
+  }
+}
+
+ACTOR SHELLBOXBuyDeco 16012
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    SBOX A -1
+    Stop
+  }
+}
+
+ACTOR SHELLBuyDeco 16013
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    SHEL A -1
+    Stop
+  }
+}
+
+//--POWERUPS
+
+ACTOR BERSERKBuyDeco 16014
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    PSTR A -1
+    Stop
+  }
+}
+
+ACTOR INVULBuyDeco 16015
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    PINV ABCD 6 Bright
+    Loop
+  }
+}
+
+ACTOR MEGASFUCKBuyDeco 16016
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    MEGA ABCD 6 Bright
+    Loop
+  }
+}
+
+//--ARMOR
+
+ACTOR GARMORBuyDeco 16017
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    ARM1 A -1
+    Stop
+  }
+}
+
+ACTOR BARMORBuyDeco 16018
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    ARM2 A -1
+    Stop
+  }
+}
+
+//--HEALS
+
+ACTOR MEDIKITBuyDeco 16019
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    MEDI A -1
+    Stop
+  }
+}
+
+ACTOR STIMKITBuyDeco 16020
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    STIM A -1
+    Stop
+  }
+}
+
+ACTOR SOULSPHEREBuyDeco 16021
+{
+//$Category Shop Items
+  Radius 16
+  Height 16
+  ProjectilePassHeight -16
+  +SOLID
+  States
+  {
+  Spawn:
+    SOUL ABCDCB 6 Bright
+    Loop
+  }
+}

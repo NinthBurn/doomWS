@@ -1,0 +1,330 @@
+
+script "togglePurchaseConfirm" (void)
+{
+	confirmPlayerPurchase = 1;
+	delay(35);
+	confirmPlayerPurchase = 0;
+}
+
+script "EnableDoublePointsBonus" (void)
+{
+	activatedDoublePoints = true;
+	pointsMultiplier *= 2;
+	delay(35 * 30);
+	pointsMultiplier /= 2;
+	activatedDoublePoints = false;
+}
+
+script "ActivateDoublePoints" (void)
+{
+	if(activatedDoublePoints) {
+		ACS_NamedTerminate("EnableDoublePointsBonus", 0);
+		pointsMultiplier /= 2;
+		Delay(1);
+	}
+
+	ACS_NamedExecute("EnableDoublePointsBonus", 0);
+}
+
+script "EnableTriplePointsBonus" (void)
+{
+	activatedTriplePoints = true;
+	pointsMultiplier *= 3;
+	delay(35 * 30);
+	pointsMultiplier /= 3;
+	activatedTriplePoints = false;
+}
+
+script "ActivateTriplePoints" (void)
+{
+	if(activatedTriplePoints) {
+		ACS_NamedTerminate("EnableTriplePointsBonus", 0);
+		pointsMultiplier /= 3;
+		Delay(1);
+	}
+
+	ACS_NamedExecute("EnableTriplePointsBonus", 0);
+}
+
+script "GetKillPoints" KILL
+{
+	if(pointsMultiplier == 0)
+		pointsMultiplier = 1;
+	
+	int points = pointsMultiplier * GetUserVariable(0, "user_killpoints");
+
+	SetActivatorToTarget(0);
+	int player = PlayerNumber();
+
+	// in-fighting or crushers or something
+	if(player == -1){
+		GiveActorInventory(0, "ShopPoints", points);	
+
+	}else GiveInventory("ShopPoints", points);
+}
+
+script "PurchaseItem" (int itemPrice, int itemAmount, int itemName, int displayName){
+	SetHudSize(640, 480, 0);
+	int player = PlayerNumber();
+
+	if(player == -1 || player > MAX_PLAYER_COUNT)
+		terminate;
+
+	SetActivator(1000 + player);
+	int points = CheckInventory("ShopPoints");
+
+	if(confirmPlayerPurchase){
+		if(itemName == "Health" && getMaxInventory(0, "Health") <= GetActorProperty(0, APROP_Health)){
+			HudMessage(s:"You cannot heal anymore!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(itemName == "GreenArmor" || itemName == "BlueArmor"){
+			if(GetArmorInfo(ARMORINFO_ACTUALSAVEAMOUNT) <= CheckInventory("Armor") && CheckInventory("Armor") > 0){
+				HudMessage(s:"Armor cannot be upgraded!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+		}else{
+			if(getMaxInventory(0, itemName) <= CheckInventory(itemName)){
+				HudMessage(s:"You already have the maximum amount!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+		}
+
+		if(points >= itemprice)
+		{
+			TakeInventory("ShopPoints", itemPrice);
+			GiveInventory(itemName, itemAmount);
+			HudMessage(s:"You have bought ", s:displayName, s:"!"; HUDMSG_PLAIN, 203, CR_TEAL, 320.0, 48.0 * 4, 2.0);
+
+		}else{
+				HudMessage(s:"You need ", d:itemPrice, s:" points to buy this item.";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		}
+
+	}else{
+		if(itemAmount > 1)
+			HudMessage(s:"Press again to buy ", d:itemAmount, s:" ", s: displayName, s:" for ", d:itemPrice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		else
+			HudMessage(s:"Press again to buy ", s:displayName, s:" for ", d:itemprice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+	}
+}
+
+script "PurchaseWeapon"(int itemPrice, int itemName, int displayName){
+	SetHudSize(640, 480, 0);
+	int player = PlayerNumber();
+
+	if(player == -1 || player > MAX_PLAYER_COUNT)
+		terminate;
+
+	int points = CheckInventory("ShopPoints");
+	
+	if(confirmPlayerPurchase){
+		if(CheckInventory(itemName)){
+			HudMessage(s:"You already own this item!"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(points >= itemPrice)
+		{
+			TakeInventory("ShopPoints", itemPrice);
+			GiveInventory(itemName, 1);
+			HudMessage(s:"You have bought ", s: displayName, s:"!"; HUDMSG_PLAIN, 203, CR_TEAL, 320.0, 48.0 * 4, 2.0);
+
+		}else{
+				HudMessage(s:"You need ", d:itemPrice, s:" points to buy this item.";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		}
+
+	}else{
+		HudMessage(s:"Press again to buy ", s: displayName, s:" for ", d:itemPrice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+	}
+}
+
+// sample; please use your own when making maps
+script "OpenDoor" (int doorNum, int doorPrice, int doorTag)
+{
+	int player = PlayerNumber();
+
+	if(player == -1)
+		terminate;
+
+	SetActivator(1000 + player);
+	int points = CheckInventory("ShopPoints");
+	SetHudSize(640, 480, 0);
+	
+	if(!dooropen[doornum]){
+
+		if(confirmPlayerPurchase){
+
+			if(points >= doorPrice)
+			{
+				TakeInventory("ShopPoints", doorPrice);
+				dooropen[doorNum] = 1;
+				Door_Open(doorTag, 16);
+				HudMessage(s:"Opening";HUDMSG_TYPEON, 203, CR_RED, 320.0, 48.0 * 4, 3.0, 0.1, 0.5);
+
+			}else{
+				HudMessage(s:"You need ", d:doorPrice, s:" points to open this door.";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			}
+
+		}else{
+			HudMessage(s:"Press again to open the door for ", d:doorPrice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+		}
+	}
+}
+
+// - - - Numbered scripts for Zandronum >:[ - - - //
+
+//PurchaseItem
+script 9800 (int itemPrice, int itemAmount, int itemName, int displayName){
+	SetHudSize(640, 480, 0);
+	int player = PlayerNumber();
+
+	if(player == -1 || player > MAX_PLAYER_COUNT)
+		terminate;
+
+	SetActivator(1000 + player);
+	int points = CheckInventory("ShopPoints");
+
+	if(confirmPlayerPurchase){
+		if(itemName == "Health" && getMaxInventory(0, "Health") <= GetActorProperty(0, APROP_Health)){
+			HudMessage(s:"You cannot heal anymore!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(itemName == "GreenArmor" || itemName == "BlueArmor"){
+			if(GetArmorInfo(ARMORINFO_ACTUALSAVEAMOUNT) <= CheckInventory("Armor") && CheckInventory("Armor") > 0){
+				HudMessage(s:"Armor cannot be upgraded!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+		}else{
+			if(getMaxInventory(0, itemName) <= CheckInventory(itemName)){
+				HudMessage(s:"You already have the maximum amount!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+		}
+
+		if(points >= itemprice)
+		{
+			TakeInventory("ShopPoints", itemPrice);
+			GiveInventory(itemName, itemAmount);
+			HudMessage(s:"You have bought ", s:displayName, s:"!"; HUDMSG_PLAIN, 203, CR_TEAL, 320.0, 48.0 * 4, 2.0);
+
+		}else{
+				HudMessage(s:"You need ", d:itemPrice, s:" points to buy this item.";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		}
+
+	}else{
+		if(itemAmount > 1)
+			HudMessage(s:"Press again to buy ", d:itemAmount, s:" ", s: displayName, s:" for ", d:itemPrice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		else
+			HudMessage(s:"Press again to buy ", s:displayName, s:" for ", d:itemprice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+	}
+}
+
+//PurchaseWeapon
+script 9801 (int itemPrice, int itemName, int displayName){
+	SetHudSize(640, 480, 0);
+	int player = PlayerNumber();
+
+	if(player == -1 || player > MAX_PLAYER_COUNT)
+		terminate;
+
+	int points = CheckInventory("ShopPoints");
+	
+	if(confirmPlayerPurchase){
+		if(CheckInventory(itemName)){
+			HudMessage(s:"You already own this item!"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(points >= itemPrice)
+		{
+			TakeInventory("ShopPoints", itemPrice);
+			GiveInventory(itemName, 1);
+			HudMessage(s:"You have bought ", s: displayName, s:"!"; HUDMSG_PLAIN, 203, CR_TEAL, 320.0, 48.0 * 4, 2.0);
+
+		}else{
+				HudMessage(s:"You need ", d:itemPrice, s:" points to buy this item.";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		}
+
+	}else{
+		HudMessage(s:"Press again to buy ", s: displayName, s:" for ", d:itemPrice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+	}
+}
+
+// - - - TO BE DELETED - - - //
+
+// not used anymore
+function void subtractCreditsFromPlayer(int amount, int player){
+	if(player == -1 || player >= MAX_PLAYER_COUNT)
+		return;
+	
+	SetActivator(1000 + player);
+	TakeActorInventory(1000 + player, "ShopPoints", amount);
+
+	SetHudSize(640, 480, 0);
+	HudMessage(s:"-", d:amount; HUDMSG_FADEINOUT, 202, CR_RED, 620.2, 405.0, 0.7, 0.5);
+}
+
+// not usable
+script "PurchaseItemOLD" (int itemprice, int itemtype, int itemamount)
+{
+	SetHudSize(640, 480, 0);
+	int player = PlayerNumber();
+
+	if(player == -1 || player > MAX_PLAYER_COUNT)
+		terminate;
+
+	if(confirmPlayerPurchase){
+		if(itemtype<6)
+			if(CheckInventory(shopItemsEntityName[itemtype])){
+				HudMessage(s:"You already own this item!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+
+		if(itemtype == 6 && getMaxInventory(0, "Health") <= GetActorProperty(0, APROP_Health)){
+			HudMessage(s:"You cannot heal anymore!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(itemtype > 6 && itemtype < 9){
+			if(GetArmorInfo(ARMORINFO_ACTUALSAVEAMOUNT) <= CheckInventory("Armor") && CheckInventory("Armor") > 0){
+				HudMessage(s:"You already own this item!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+				terminate;
+			}
+		}
+
+		if(itemtype > 8 && getMaxInventory(0, shopItemsEntityName[itemtype]) <= CheckInventory(shopItemsEntityName[itemtype])){
+			HudMessage(s:"You already have the maximum amount!";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+			terminate;
+		}
+
+		if(playerPoints[player] >= itemprice)
+		{
+			subtractCreditsFromPlayer(itemprice, player);
+			GiveInventory(shopItemsEntityName[itemtype], itemamount);
+			HudMessage(s:"You have bought ", s:shopItemsDisplayName[itemtype], s:"!";HUDMSG_PLAIN, 203, CR_TEAL, 320.0, 48.0 * 4, 2.0);
+
+		}else{
+				HudMessage(s:"You need ", d:itemprice, s:" points to buy this item";HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+		}
+
+	}else{
+		if(itemamount > 1)
+			HudMessage(s:"Press again to buy ", d:itemamount, s:" ", s:shopItemsDisplayName[itemtype], s:" for ", d:itemprice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		else
+			HudMessage(s:"Press again to buy ", s:shopItemsDisplayName[itemtype], s:" for ", d:itemprice, s:" credits.\n"; HUDMSG_PLAIN, 203, CR_RED, 320.0, 48.0 * 4, 3.0);
+
+		ACS_NamedExecuteAlways("togglePurchaseConfirm",0);
+	}
+}

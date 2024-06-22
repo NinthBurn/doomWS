@@ -1,0 +1,12 @@
+Model specialCrateClosed
+{
+	Path "MODELS"
+	Model 0 "spcrtcls.md3"
+	
+	Scale 1.0 1.0 1.0
+	
+	USEACTORPITCH
+	USEACTORROLL
+   
+	FrameIndex TCBR A 0 0
+}

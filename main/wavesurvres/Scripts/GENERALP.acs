@@ -1,0 +1,54 @@
+
+script "ChangeMusic" (int track)
+{
+	for (int i = 0; i < 21; i++) {
+		musicVolume -= 0.05;
+		SetMusicVolume(musicVolume);
+		delay(2);
+		}
+		SetMusic(mus[track]);
+		for (i = 0; i < 21; i++) {
+			musicVolume += 0.05;
+			SetMusicVolume(musicVolume);
+			delay(2);
+		}
+}
+
+script "ChangeMusicNamed" (int track)
+{
+	for (int i = 0; i < 21; i++) {
+		musicVolume -= 0.05;
+		SetMusicVolume(musicVolume);
+		delay(2);
+		}
+		SetMusic(track);
+		for (i = 0; i < 21; i++) {
+			musicVolume += 0.05;
+			SetMusicVolume(musicVolume);
+			delay(2);
+		}
+}
+
+function void startWave(str waveMessage){
+	++currentWaveRound;
+
+	HudMessage (s:"Wave ", d:currentWaveRound, s:" has begun!"; HUDMSG_FADEINOUT,203,CR_RED,0.5,0.4,3.0, 0.5, 0.5);
+	HudMessage (s:waveMessage; HUDMSG_FADEINOUT,204,CR_RED,0.5,0.45,3.0, 0.5, 0.5);
+	waveStatus = StrParam(s:"Wave ", d:currentWaveRound, s:"/", d:totalWaves);
+}
+
+function void endWave(str waveMessage){
+	HudMessage (s:"Wave ", d:currentWaveRound, s:" complete!"; HUDMSG_FADEINOUT,203,CR_RED,0.5,0.4,3.0, 0.5, 0.5);
+	HudMessage (s:waveMessage; HUDMSG_FADEINOUT,204,CR_RED,0.5,0.45,3.0, 0.5, 0.5);
+	waveStatus="Waiting for wave...";
+}
+
+
+script "waitForWaveEnd" (void){
+	mtotal = GetLevelInfo (LEVELINFO_TOTAL_MONSTERS);
+	while(mtotal > mkilled)
+	{
+		mtotal = GetLevelInfo(LEVELINFO_TOTAL_MONSTERS);
+		Delay(2);
+	}
+}

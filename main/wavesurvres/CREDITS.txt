@@ -1,0 +1,131 @@
+-- Textures -- 
+Freedoom
+
+-- MIDIs -- 
+Lee Jackson - Going Down the Fast Way (don't remember where I found this midi, it sounds like a remix)
+Leo Sieben - Sadistic
+Jonathan El-Bizri - Death's Bells
+pcorf - Triangular Currents
+Doomkid & Jimmy - Source of Stress
+D_WAVEND is from Stonekeep
+
+-- Weapons --
+Double Chainsaw
+Submitted: Xim
+Decorate: Xim
+Sprites: id Software
+Sounds: id Software
+
+SMG/Machinegun
+Submitted: Captain Toenail
+Decorate: Captain Toenail
+Sprites: id Software
+Sprites Edit: Captain Toenail
+Sounds: FreeDoom
+
+Chaingun
+Code - Z86 (taken from Heavy Chaingun), NinthBurn
+Sounds - BDPACK*
+Sprites - Orka, 3D Realms, B.P.R.D
+
+AK47
+HUD Sprites: JoeyTD, DIMOSHunter, GhostKillahZero, wildweasel, id Software, GAA1992
+Reloading Sprites: Necronixxus, Flammable4444
+Rifle Pickup Sprite: Terminator Rampage
+Rifle Pickup Sprite Edits: JoeyTD, wildweasel
+Mag Pickup Sprite: Sgt. Shivers
+Firing Sound: Missing source. Extracted from AK47 in Realm667 repository
+Misc Edits: NovaRain
+
+-- Monsters --
+Kamikaze
+Submitted: Captain Toenail
+Decorate: Captain Toenail
+Sounds: Croteam
+Sprites: Id Software, Tormentor667
+Sprite Edit: Captain Toenail
+
+Mauler Demon
+Submitted: Tormentor667
+Code: KDiZD Team, Ghastly (ZScript conversion)
+GLDefs: Sandypaper (Brightmaps)
+Sounds: Id Software
+Sprites: Id Software
+Sprite Edit: Eriance
+
+Devil
+Submitted: Tormentor667
+Decorate: Eriance
+Sounds: Id Software, Midway, Eriance
+Sprites: Id Software
+Sprite Edit: Eriance
+
+Flamer Zombie
+Submitted: scalliano
+Code: scalliano, GreyGhost, Ghastly (ZScript conversion)
+GLDefs: Tormentor667
+Sounds: Eriance (?)
+Sprites: Id Software, Xim, Eriance
+Sprite Edit: scalliano
+
+-- Power-Ups --
+Double & Quad damage
+Code: Captain Toenail
+GLDefs: Scalliano
+Sounds: Freesound.org
+Sprites: Doom
+Sprite Edit: Captain Toenail
+Idea Base: Skulltag's DoomSpheree
+
+Berserk Sphere
+Submitted: Dreadopp
+Decorate: Dreadopp
+GLDefs: Dreadopp
+Sounds: Id Software
+Sprites: Id Software
+Sprite Edit: Dreadopp
+
+Armor Sphere
+Submitted: Ghastly_dragon
+Decorate: Ghastly_dragon
+GLDefs: Ghastly_dragon
+Sounds: None
+Sprites: Id Software
+Sprite Edit: Lucario
+
+Ammo Sphere
+Submitted: Dreadopp
+Decorate: Dreadopp
+GLDefs: Dreadopp
+Sounds: Id Software
+Sprites: Id Software
+Sprite Edit: Dreadopp
+
+Haste Sphere
+Submitted: scalliano
+Decorate: scalliano
+GLDefs: scalliano
+Sounds: None
+Sprites: Id Software
+Sprite Edit: scalliano
+Idea Base: Doom-class Haste powerup from Generations Arena mod for Q3
+
+Double & Triple Points Sphere
+Text: https://c.eev.ee/doom-text-generator/
+Sprite: https://aipixelartgenerator.com
+
+-- Miscellaneous --
+Bullet/Scatter Projectile (taken from Scatter Pistol)
+Code - Mor'ladim
+Sounds - Painkiller, Bulletstorm, Omega Boost
+Sprites - Mor'ladim, id Software, Legend of the Monster Hunter
+GLDEFS - Mor'ladim
+
+*BDPACK - I took these sounds from an addon for Brutal Doom, the credits didn't specify which sounds belongs to whom, so I will list everyone involved:
+    Blackmore1014
+    Iddqd_Idkfa_Idclip
+    Doomsmile
+    Doomsmile
+    Vsonnier
+    Bifurcator
+    eapror
